@@ -6,15 +6,25 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     const taskLi = document.createElement("li");
     let txt  = taskDesc.value;
-    // if
-    taskLi.innerHTML = txt + '<button id="del">X</button>';
-    tasksList.appendChild(taskLi);
-    e.target.reset();
 
-    let dBtn = document.querySelector("#del");
-    dBtn.addEventListener("click", function(e) {
-      e.currentTarget.parentNode.remove();
-    });
+    // Prevent saving empty TODO
+    if (txt && txt.trim().length) {
+      taskLi.innerHTML = txt + '<button class="btn-delete">X</button>';
+      tasksList.appendChild(taskLi);
+      e.target.reset();
+    }
+
+    // Deleting TODOs
+    let deleteButtons = document.querySelectorAll(".btn-delete");
+    if (deleteButtons.length > 0) {
+      deleteButtons.forEach((item) => item.addEventListener("click", () => {
+        let li = item.parentNode;
+        if (li !== null) {
+          let liParent = li.parentNode;
+          liParent.removeChild(li);
+        }
+      }));
+    }
   });
 
 });
